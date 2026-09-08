@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সোশ্যাল সিকিউর — ফেসবুক ও সোশ্যাল মিডিয়া নিরাপত্তা গাইড</title>
+<meta name="description" content="ফেসবুক অ্যাকাউন্ট নিরাপত্তা, হ্যাক প্রতিরোধ, রিকভারি ও সোশ্যাল মিডিয়া ব্যবহারের বাস্তব অভিজ্ঞতাভিত্তিক গাইড — সহজ বাংলায়।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171B2E;
+    --paper:#FFFFFF;
+    --paper-dark:#12121C;
+    --bg:#F6F5F1;
+    --bg-dark:#0B0C14;
+    --navy:#1A2140;
+    --navy-deep:#0F1428;
+    --gold:#B8863B;
+    --gold-soft:#F3E7D3;
+    --muted:#6B6F80;
+    --line:#E7E5DE;
+    --safe:#2C6B4F;
+    --safe-bg:#E7F2ED;
+    --warn:#8B4A2E;
+    --warn-bg:#F5E9E1;
+    --maroon:#8B2E2E;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:'Hind Siliguri', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+  }
+  [data-theme="dark"] body{ background:var(--bg-dark); color:#EDEDF2; }
+  h1,h2,h3{ font-family:'Noto Serif Bengali', serif; margin:0; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  /* ---------- nav ---------- */
+  .site-nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; gap:16px;
+    padding:13px 18px;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    max-width:560px; margin:0 auto;
+  }
+  [data-theme="dark"] .site-nav{ background:var(--paper-dark); border-color:#252838; }
+  .site-nav .brand{
+    display:flex; align-items:center; gap:7px;
+    font-family:'Noto Serif Bengali', serif;
+    font-weight:700; font-size:15.5px;
+    color:var(--navy); text-decoration:none; flex-shrink:0;
+  }
+  [data-theme="dark"] .site-nav .brand{ color:#E8D9BC; }
+  .site-nav .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold); }
+  .site-nav .links{
+    display:flex; gap:16px; overflow-x:auto;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .site-nav .links::-webkit-scrollbar{ display:none; }
+  .site-nav .links a{
+    white-space:nowrap; font-size:13px; font-weight:600;
+    color:var(--muted); text-decoration:none;
+  }
+  .theme-toggle{
+    margin-left:auto; flex-shrink:0; width:30px; height:30px;
+    border-radius:50%; border:1px solid var(--line); background:none;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    color:var(--ink); font-size:14px;
+  }
+  [data-theme="dark"] .theme-toggle{ border-color:#2b2e40; color:#EDEDF2; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color:#F3F1EA;
+    padding:34px 20px 30px;
+  }
+  .hero-inner{ max-width:520px; margin:0 auto; }
+  .hero .eyebrow{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:700; color:var(--gold-soft);
+    background:rgba(184,134,59,.18);
+    border:1px solid rgba(184,134,59,.4);
+    padding:4px 11px; border-radius:999px; margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:26px; line-height:1.42; font-weight:700;
+    margin-bottom:10px;
+  }
+  .hero p{
+    font-size:14px; color:#C9CADA; margin-bottom:20px; max-width:40ch;
+  }
+  .search-box{
+    display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:11px; padding:11px 14px;
+  }
+  .search-box svg{ width:17px; height:17px; flex-shrink:0; opacity:.75; }
+  .search-box input{
+    background:none; border:none; outline:none; color:#fff;
+    font-family:inherit; font-size:14px; width:100%;
+  }
+  .search-box input::placeholder{ color:#9EA0B5; }
+
+  /* ---------- category chips ---------- */
+  .cat-row{
+    max-width:520px; margin:18px auto 0; padding:0 16px;
+    display:flex; gap:8px; overflow-x:auto;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .cat-row::-webkit-scrollbar{ display:none; }
+  .cat-chip{
+    flex-shrink:0; font-size:13px; font-weight:600;
+    padding:7px 14px; border-radius:999px;
+    border:1.5px solid var(--line);
+    background:var(--paper); color:var(--muted);
+    cursor:pointer; white-space:nowrap;
+  }
+  [data-theme="dark"] .cat-chip{ background:var(--paper-dark); border-color:#2b2e40; color:#B7B9C9; }
+  .cat-chip.active{
+    background:var(--navy); border-color:var(--navy); color:#fff;
+  }
+
+  /* ---------- content wrap ---------- */
+  .wrap{ max-width:520px; margin:0 auto; padding:20px 16px 10px; }
+  .section-title{
+    font-size:13px; font-weight:700; color:var(--gold);
+    text-transform:none; margin:26px 0 12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-title::after{
+    content:''; flex:1; height:1px; background:var(--line);
+  }
+
+  /* ---------- featured card ---------- */
+  .featured{
+    display:block; text-decoration:none; color:inherit;
+    background:var(--paper); border:1px solid var(--line);
+    border-radius:18px; overflow:hidden; margin-bottom:6px;
+  }
+  [data-theme="dark"] .featured{ background:var(--paper-dark); border-color:#252838; }
+  .featured img{ width:100%; height:190px; object-fit:cover; }
+  .featured .fbody{ padding:16px 18px 18px; }
+  .featured .fcat{
+    display:inline-block; font-size:11px; font-weight:700;
+    color:var(--navy); background:var(--gold-soft);
+    padding:3px 10px; border-radius:999px; margin-bottom:9px;
+  }
+  [data-theme="dark"] .featured .fcat{ background:#2A2440; color:#E8D9BC; }
+  .featured h2{ font-size:19.5px; line-height:1.4; margin-bottom:8px; }
+  .featured p{ font-size:13.5px; color:var(--muted); margin-bottom:12px; }
+  .meta-row{
+    display:flex; gap:14px; font-size:12px; color:var(--muted);
+    align-items:center;
+  }
+  .readmore{ font-size:13px; font-weight:700; color:var(--navy); }
+  [data-theme="dark"] .readmore{ color:#E8D9BC; }
+
+  /* ---------- post grid ---------- */
+  .post-grid{ display:flex; flex-direction:column; gap:14px; margin-top:14px; }
+  .post-card{
+    display:block; text-decoration:none; color:inherit;
+    background:var(--paper); border:1px solid var(--line);
+    border-radius:14px; padding:14px 16px;
+  }
+  [data-theme="dark"] .post-card{ background:var(--paper-dark); border-color:#252838; }
+  .post-card .pcat{
+    font-size:11px; font-weight:700; color:var(--gold); margin-bottom:6px; display:block;
+  }
+  .post-card h3{ font-size:16px; line-height:1.45; margin-bottom:6px; }
+  .post-card p{ font-size:13px; color:var(--muted); margin-bottom:10px; }
+  .empty-note{
+    text-align:center; font-size:13.5px; color:var(--muted);
+    padding:26px 10px;
+  }
+
+  /* ---------- post detail ---------- */
+  .post-detail{ display:none; max-width:520px; margin:0 auto; padding:18px 16px 40px; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:13px; font-weight:600; color:var(--muted);
+    text-decoration:none; margin-bottom:16px;
+  }
+  .post-detail article{
+    background:var(--paper); border:1px solid var(--line);
+    border-radius:16px; padding:20px; margin-bottom:18px;
+  }
+  [data-theme="dark"] .post-detail article{ background:var(--paper-dark); border-color:#252838; }
+  .post-detail img{ border-radius:10px; margin-bottom:14px; }
+  .post-detail h1{ font-size:22px; line-height:1.44; margin:8px 0 14px; }
+  .post-detail .content{ font-size:14.5px; line-height:1.85; white-space:pre-wrap; }
+  .engage-row{ display:flex; gap:10px; margin-top:20px; }
+  .engage-row button{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:10px; border-radius:10px; border:1.5px solid var(--line);
+    background:var(--paper); color:var(--ink);
+    font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer;
+  }
+  [data-theme="dark"] .engage-row button{ background:var(--paper-dark); border-color:#2b2e40; color:#EDEDF2; }
+  .engage-row button.liked{ border-color:var(--maroon); color:var(--maroon); background:var(--warn-bg); }
+
+  .comments-block h2{ font-size:16px; margin-bottom:12px; }
+  .comment-item{
+    background:var(--paper); border:1px solid var(--line);
+    border-radius:10px; padding:10px 12px; margin-bottom:8px;
+  }
+  [data-theme="dark"] .comment-item{ background:var(--paper-dark); border-color:#252838; }
+  .comment-item .cname{ font-size:13px; font-weight:700; margin-bottom:3px; }
+  .comment-item .ctext{ font-size:13.5px; line-height:1.55; white-space:pre-wrap; }
+  .comment-item .cdate{ font-size:11px; color:var(--muted); margin-top:4px; }
+  .comment-form input, .comment-form textarea{
+    width:100%; padding:10px; border-radius:8px; border:1.5px solid var(--line);
+    font-family:inherit; font-size:14px; margin-bottom:8px;
+    background:var(--paper); color:var(--ink);
+  }
+  [data-theme="dark"] .comment-form input, [data-theme="dark"] .comment-form textarea{
+    background:var(--paper-dark); border-color:#2b2e40; color:#EDEDF2;
+  }
+  .comment-form textarea{ min-height:70px; resize:vertical; }
+  .captcha-row{
+    display:flex; align-items:center; gap:10px;
+    font-size:13.5px; font-weight:600; margin-bottom:8px;
+  }
+  .captcha-row input{ width:80px; margin-bottom:0; }
+  .comment-form button{
+    width:100%; padding:11px; border:none; border-radius:10px;
+    background:var(--navy); color:#fff; font-family:inherit;
+    font-size:14px; font-weight:700; cursor:pointer;
+  }
+  .comment-msg{ font-size:12.5px; margin-top:8px; }
+  .related-row{ display:flex; flex-direction:column; gap:10px; }
+
+  /* ---------- footer ---------- */
+  .site-footer{
+    max-width:520px; margin:30px auto 0; padding:26px 18px 20px;
+    border-top:1px solid var(--line); text-align:center;
+  }
+  .site-footer .sf-brand{
+    font-family:'Noto Serif Bengali', serif; font-weight:700;
+    font-size:17px; color:var(--navy); margin-bottom:6px;
+  }
+  [data-theme="dark"] .site-footer .sf-brand{ color:#E8D9BC; }
+  .site-footer .sf-tagline{ font-size:12.5px; color:var(--muted); margin-bottom:16px; }
+  .site-footer .sf-links{
+    display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin-bottom:16px;
+  }
+  .site-footer .sf-links a{ font-size:13px; font-weight:600; text-decoration:none; }
+  .site-footer .sf-sister{
+    font-size:12.5px; color:var(--muted); margin-bottom:14px;
+  }
+  .site-footer .sf-sister a{ color:var(--gold); font-weight:700; text-decoration:none; }
+  .site-footer .sf-copy{ font-size:11.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="#top"><span class="dot"></span> সোশ্যাল সিকিউর</a>
+  <div class="links">
+    <a href="#top">হোম</a>
+    <a href="#" id="navAllPosts">সব পোস্ট</a>
+    <a href="https://alamingazi533.github.io/fb-help/" target="_blank" rel="noopener">সেবা নিন</a>
+  </div>
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="থিম পরিবর্তন">🌙</button>
+</nav>
+
+<div id="homeView">
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <span class="eyebrow">🛡️ নিরাপত্তা ব্লগ</span>
+      <h1>আপনার ফেসবুক অ্যাকাউন্ট রাখুন নিরাপদ</h1>
+      <p>হ্যাক প্রতিরোধ, অ্যাকাউন্ট রিকভারি ও সোশ্যাল মিডিয়া নিরাপদে ব্যবহারের বাস্তব অভিজ্ঞতাভিত্তিক গাইড — সহজ বাংলায়।</p>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" placeholder="পোস্ট খুঁজুন — যেমন: পাসওয়ার্ড, হ্যাক, রিকভারি">
+      </div>
+    </div>
+  </header>
+
+  <div class="cat-row" id="catRow"></div>
+
+  <div class="wrap">
+    <div id="featuredSlot"></div>
+    <div class="section-title" id="gridTitle">সব লেখা</div>
+    <div class="post-grid" id="postGrid"></div>
+  </div>
+</div>
+
+<div class="post-detail" id="postDetail">
+  <a class="back-link" href="#" id="backLink">← সব পোস্টে ফিরুন</a>
+  <div id="postDetailContent"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-brand">সোশ্যাল সিকিউর</div>
+  <div class="sf-tagline">ফেসবুক ও সোশ্যাল মিডিয়া নিরাপত্তা গাইড</div>
+  <div class="sf-links">
+    <a href="#top">হোম</a>
+    <a href="#" id="footerAllPosts">সব পোস্ট</a>
+  </div>
+  <div class="sf-sister">
+    অ্যাকাউন্ট হ্যাক হয়েছে বা ডিজেবল? <a href="https://alamingazi533.github.io/fb-help/" target="_blank" rel="noopener">আমাদের সেবা পাতায় যান →</a>
+  </div>
+  <div class="sf-copy">© <span id="footerYear"></span> সোশ্যাল সিকিউর — সর্বস্বত্ব সংরক্ষিত</div>
+</footer>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTc7Kg6lsjmY8nGyqcI5AsZxwNZxliQQ78r6Lr_YrWE0I4GPQQ1JhW0ssT2t9yjy4/exec";
+const SITE_KEY = "blog";
+
+let __allPosts = [];
+let __activeCategory = 'সব';
+let __searchTerm = '';
+
+/* ---------------- theme ---------------- */
+(function initTheme(){
+  const saved = localStorage.getItem('ss_theme');
+  if(saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  updateThemeIcon();
+})();
+function updateThemeIcon(){
+  const btn = document.getElementById('themeToggle');
+  if(btn) btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+}
+document.getElementById('themeToggle').addEventListener('click', function(){
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if(isDark){
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('ss_theme', 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('ss_theme', 'dark');
+  }
+  updateThemeIcon();
+});
+
+/* ---------------- helpers ---------------- */
+function esc(s){
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function excerpt(text, len){
+  const t = String(text || '').trim();
+  if(t.length <= len) return t;
+  return t.slice(0, len).trim() + '…';
+}
+function getLikedIds(){
+  try{ return JSON.parse(localStorage.getItem('likedPostIds') || '[]'); }catch(e){ return []; }
+}
+function markLiked(id){
+  const liked = getLikedIds();
+  if(!liked.includes(id)){
+    liked.push(id);
+    try{ localStorage.setItem('likedPostIds', JSON.stringify(liked)); }catch(e){}
+  }
+}
+
+/* ---------------- load posts ---------------- */
+function loadPosts(){
+  fetch(SCRIPT_URL + '?action=getPosts&site=' + SITE_KEY)
+    .then(r => r.json())
+    .then(data => {
+      __allPosts = (data.success && data.posts) ? data.posts : [];
+      buildCategoryChips();
+      renderHome();
+      initRouter();
+    })
+    .catch(()=>{
+      document.getElementById('postGrid').innerHTML = '<p class="empty-note">লেখা লোড করতে সমস্যা হয়েছে। একটু পর আবার চেষ্টা করুন।</p>';
+    });
+}
+
+function buildCategoryChips(){
+  const cats = ['সব'];
+  __allPosts.forEach(p => {
+    const c = p.category || 'সাধারণ';
+    if(cats.indexOf(c) === -1) cats.push(c);
+  });
+  const row = document.getElementById('catRow');
+  row.innerHTML = cats.map(c =>
+    '<button type="button" class="cat-chip' + (c === __activeCategory ? ' active' : '') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>'
+  ).join('');
+  row.querySelectorAll('.cat-chip').forEach(btn => {
+    btn.addEventListener('click', function(){
+      __activeCategory = btn.getAttribute('data-cat');
+      buildCategoryChips();
+      renderHome();
+    });
+  });
+}
+
+function getFilteredPosts(){
+  return __allPosts.filter(p => {
+    const matchesCat = __activeCategory === 'সব' || (p.category || 'সাধারণ') === __activeCategory;
+    const term = __searchTerm.trim();
+    const matchesSearch = !term || (p.title || '').indexOf(term) !== -1 || (p.content || '').indexOf(term) !== -1;
+    return matchesCat && matchesSearch;
+  });
+}
+
+function renderHome(){
+  const filtered = getFilteredPosts();
+  const featuredSlot = document.getElementById('featuredSlot');
+  const grid = document.getElementById('postGrid');
+  const gridTitle = document.getElementById('gridTitle');
+
+  if(__allPosts.length === 0){
+    featuredSlot.innerHTML = '';
+    grid.innerHTML = '<p class="empty-note">এখনো কোনো পোস্ট নেই। শিগগিরই নতুন লেখা যোগ হবে।</p>';
+    return;
+  }
+
+  if(filtered.length === 0){
+    featuredSlot.innerHTML = '';
+    gridTitle.textContent = 'ফলাফল';
+    grid.innerHTML = '<p class="empty-note">কিছু পাওয়া যায়নি। অন্য কিওয়ার্ড বা ক্যাটাগরি চেষ্টা করুন।</p>';
+    return;
+  }
+
+  const noFilterActive = (__activeCategory === 'সব' && !__searchTerm.trim());
+  if(noFilterActive){
+    featuredSlot.innerHTML = renderFeatured(filtered[0]);
+    gridTitle.textContent = 'সাম্প্রতিক লেখা';
+    grid.innerHTML = filtered.slice(1).map(renderCard).join('');
+  } else {
+    featuredSlot.innerHTML = '';
+    gridTitle.textContent = 'ফলাফল (' + filtered.length + ')';
+    grid.innerHTML = filtered.map(renderCard).join('');
+  }
+}
+
+function renderFeatured(p){
+  const img = p.imageUrl ? '<img src="' + p.imageUrl + '" alt="" loading="lazy">' : '';
+  return '<a class="featured" href="?post=' + encodeURIComponent(p.id) + '">' +
+    img +
+    '<div class="fbody">' +
+      '<span class="fcat">' + esc(p.category || 'সাধারণ') + '</span>' +
+      '<h2>' + esc(p.title) + '</h2>' +
+      '<p>' + esc(excerpt(p.content, 130)) + '</p>' +
+      '<div class="meta-row">' +
+        '<span>❤️ ' + (p.likes || 0) + '</span>' +
+        '<span>💬 ' + (p.commentCount || 0) + '</span>' +
+        '<span style="margin-left:auto;" class="readmore">পড়ুন →</span>' +
+      '</div>' +
+    '</div>' +
+  '</a>';
+}
+
+function renderCard(p){
+  return '<a class="post-card" href="?post=' + encodeURIComponent(p.id) + '">' +
+    '<span class="pcat">' + esc(p.category || 'সাধারণ') + '</span>' +
+    '<h3>' + esc(p.title) + '</h3>' +
+    '<p>' + esc(excerpt(p.content, 100)) + '</p>' +
+    '<div class="meta-row">' +
+      '<span>❤️ ' + (p.likes || 0) + '</span>' +
+      '<span>💬 ' + (p.commentCount || 0) + '</span>' +
+      '<span style="margin-left:auto;" class="readmore">পড়ুন →</span>' +
+    '</div>' +
+  '</a>';
+}
+
+/* ---------------- search ---------------- */
+document.getElementById('searchInput').addEventListener('input', function(){
+  __searchTerm = this.value;
+  __activeCategory = 'সব';
+  buildCategoryChips();
+  renderHome();
+});
+function goHome(e){
+  if(e) e.preventDefault();
+  window.location.href = window.location.pathname;
+}
+document.getElementById('navAllPosts').addEventListener('click', goHome);
+document.getElementById('footerAllPosts').addEventListener('click', goHome);
+
+/* ---------------- routing ---------------- */
+function initRouter(){
+  const params = new URLSearchParams(window.location.search);
+  const postId = params.get('post');
+  if(postId){
+    showPostDetail(postId);
+  }
+}
+
+function showPostDetail(postId){
+  const post = __allPosts.find(p => String(p.id) === String(postId));
+  const homeView = document.getElementById('homeView');
+  const detailView = document.getElementById('postDetail');
+  if(!post){
+    homeView.style.display = 'none';
+    detailView.style.display = 'block';
+    document.getElementById('postDetailContent').innerHTML = '<p class="empty-note">পোস্টটি খুঁজে পাওয়া যায়নি।</p>';
+    return;
+  }
+  homeView.style.display = 'none';
+  detailView.style.display = 'block';
+  window.scrollTo(0, 0);
+
+  const imgHtml = post.imageUrl ? '<img src="' + post.imageUrl + '" alt="" loading="lazy" style="width:100%; max-height:260px; object-fit:cover;">' : '';
+  const videoHtml = post.videoUrl ? '<iframe src="' + post.videoUrl + '" style="width:100%; height:220px; border:none; border-radius:10px; margin-bottom:14px;" allow="autoplay"></iframe>' : '';
+  const alreadyLiked = getLikedIds().includes(String(post.id));
+
+  const related = __allPosts.filter(p => String(p.id) !== String(post.id) && (p.category || 'সাধারণ') === (post.category || 'সাধারণ')).slice(0, 3);
+  const relatedHtml = related.length
+    ? '<div class="section-title">সম্পর্কিত লেখা</div><div class="related-row">' + related.map(renderCard).join('') + '</div>'
+    : '';
+
+  document.getElementById('postDetailContent').innerHTML =
+    '<article>' +
+      '<span class="fcat">' + esc(post.category || 'সাধারণ') + '</span>' +
+      '<h1>' + esc(post.title) + '</h1>' +
+      imgHtml + videoHtml +
+      '<div class="content">' + esc(post.content) + '</div>' +
+      '<div class="engage-row">' +
+        '<button type="button" id="likeBtn" class="' + (alreadyLiked ? 'liked' : '') + '"' + (alreadyLiked ? ' disabled' : '') + '>' +
+          (alreadyLiked ? '❤️ পছন্দ হয়েছে' : '🤍 পছন্দ') + ' (<span id="likeCount">' + (post.likes || 0) + '</span>)' +
+        '</button>' +
+        '<button type="button" id="shareBtn2">🔗 শেয়ার করুন</button>' +
+      '</div>' +
+    '</article>' +
+    '<div class="comments-block">' +
+      '<h2>💬 কমেন্ট (<span id="commentCountLabel">' + (post.commentCount || 0) + '</span>)</h2>' +
+      '<div id="commentsList"><p class="empty-note">লোড হচ্ছে...</p></div>' +
+      '<div class="comment-form">' +
+        '<input type="text" id="cName" placeholder="আপনার নাম (ঐচ্ছিক)">' +
+        '<textarea id="cText" placeholder="আপনার মতামত লিখুন..."></textarea>' +
+        '<input type="text" id="cHp" name="website" autocomplete="off" tabindex="-1" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;">' +
+        '<div class="captcha-row"><span id="cCaptchaQ"></span><input type="text" id="cCaptchaAns" inputmode="numeric" placeholder="উত্তর"></div>' +
+        '<button type="button" id="cSubmit">কমেন্ট করুন</button>' +
+        '<div id="cMsg" class="comment-msg" style="display:none;"></div>' +
+      '</div>' +
+    '</div>' +
+    relatedHtml;
+
+  document.title = post.title + ' | সোশ্যাল সিকিউর';
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if(metaDesc) metaDesc.setAttribute('content', excerpt(post.content, 155));
+
+  document.getElementById('likeBtn').addEventListener('click', function(){ likePost(String(post.id)); });
+  document.getElementById('shareBtn2').addEventListener('click', function(){ sharePost(String(post.id), post.title); });
+  document.getElementById('cSubmit').addEventListener('click', function(){ submitComment(String(post.id)); });
+  newCaptcha();
+  loadComments(String(post.id));
+}
+
+document.getElementById('backLink').addEventListener('click', function(e){
+  e.preventDefault();
+  window.location.href = window.location.pathname;
+});
+
+/* ---------------- like ---------------- */
+function likePost(postId){
+  if(getLikedIds().includes(postId)) return;
+  const btn = document.getElementById('likeBtn');
+  const countEl = document.getElementById('likeCount');
+  if(btn) btn.disabled = true;
+  fetch(SCRIPT_URL, {
+    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ action: 'likePost', postId: postId })
+  }).then(()=>{
+    markLiked(postId);
+    const post = __allPosts.find(p => String(p.id) === postId);
+    const newCount = (post ? (Number(post.likes) || 0) : 0) + 1;
+    if(post) post.likes = newCount;
+    if(countEl) countEl.textContent = newCount;
+    if(btn){
+      btn.classList.add('liked');
+      btn.innerHTML = '❤️ পছন্দ হয়েছে (<span id="likeCount">' + newCount + '</span>)';
+    }
+  }).catch(()=>{ if(btn) btn.disabled = false; });
+}
+
+/* ---------------- share ---------------- */
+async function sharePost(postId, title){
+  const shareData = {
+    title: title || 'সোশ্যাল সিকিউর',
+    text: 'এই লেখাটি দেখুন — সোশ্যাল সিকিউর:',
+    url: window.location.origin + window.location.pathname + '?post=' + encodeURIComponent(postId)
+  };
+  if(navigator.share){
+    try{ await navigator.share(shareData); }catch(err){}
+  } else {
+    try{
+      await navigator.clipboard.writeText(shareData.url);
+      alert('লিংক কপি হয়েছে!');
+    }catch(err){
+      alert('লিংক: ' + shareData.url);
+    }
+  }
+}
+
+/* ---------------- captcha ---------------- */
+let cCaptchaA = 0, cCaptchaB = 0, cCaptchaAnswer = 0;
+function newCaptcha(){
+  cCaptchaA = Math.floor(Math.random() * 8) + 1;
+  cCaptchaB = Math.floor(Math.random() * 8) + 1;
+  cCaptchaAnswer = cCaptchaA + cCaptchaB;
+  const qEl = document.getElementById('cCaptchaQ');
+  const ansEl = document.getElementById('cCaptchaAns');
+  if(qEl) qEl.textContent = cCaptchaA + ' + ' + cCaptchaB + ' =';
+  if(ansEl) ansEl.value = '';
+}
+
+/* ---------------- comments ---------------- */
+function loadComments(postId){
+  const listEl = document.getElementById('commentsList');
+  fetch(SCRIPT_URL + '?action=getComments&postId=' + encodeURIComponent(postId))
+    .then(r => r.json())
+    .then(data => {
+      const comments = (data.success && data.comments) ? data.comments : [];
+      if(comments.length === 0){
+        listEl.innerHTML = '<p class="empty-note">এখনো কোনো কমেন্ট নেই। প্রথম কমেন্টটি আপনিই করুন।</p>';
+        return;
+      }
+      listEl.innerHTML = comments.map(c =>
+        '<div class="comment-item">' +
+          '<div class="cname">' + esc(c.name || 'অজ্ঞাত') + '</div>' +
+          '<div class="ctext">' + esc(c.text) + '</div>' +
+          '<div class="cdate">' + esc(c.date || '') + '</div>' +
+        '</div>'
+      ).join('');
+    })
+    .catch(()=>{ listEl.innerHTML = '<p class="empty-note">কমেন্ট লোড করতে সমস্যা হয়েছে।</p>'; });
+}
+
+function submitComment(postId){
+  const nameInput = document.getElementById('cName');
+  const textInput = document.getElementById('cText');
+  const hpInput = document.getElementById('cHp');
+  const captchaInput = document.getElementById('cCaptchaAns');
+  const btn = document.getElementById('cSubmit');
+  const msgBox = document.getElementById('cMsg');
+  const text = textInput.value.trim();
+  const name = nameInput.value.trim();
+  const hp = hpInput.value.trim();
+
+  if(!text){
+    msgBox.style.display = 'block'; msgBox.style.color = 'var(--maroon)';
+    msgBox.textContent = 'কমেন্ট লিখুন।';
+    return;
+  }
+  if(parseInt(captchaInput.value.trim(), 10) !== cCaptchaAnswer){
+    msgBox.style.display = 'block'; msgBox.style.color = 'var(--maroon)';
+    msgBox.textContent = 'যাচাই ঘরের উত্তরটি সঠিক নয়।';
+    newCaptcha();
+    return;
+  }
+
+  const a = cCaptchaA, b = cCaptchaB;
+  btn.disabled = true; btn.textContent = 'জমা হচ্ছে...';
+  fetch(SCRIPT_URL, {
+    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({
+      action: 'addComment', postId: postId, name: name, comment: text, hp: hp,
+      captchaA: a, captchaB: b, captchaAns: a + b
+    })
+  }).then(()=>{
+    textInput.value = ''; nameInput.value = ''; newCaptcha();
+    msgBox.style.display = 'block'; msgBox.style.color = 'var(--safe)';
+    msgBox.textContent = '✓ আপনার কমেন্ট পাবলিশ হয়েছে!';
+    setTimeout(()=> loadComments(postId), 800);
+  }).catch(()=>{
+    msgBox.style.display = 'block'; msgBox.style.color = 'var(--maroon)';
+    msgBox.textContent = 'দুঃখিত, কমেন্ট জমা দিতে সমস্যা হয়েছে।';
+  }).finally(()=>{
+    btn.disabled = false; btn.textContent = 'কমেন্ট করুন';
+  });
+}
+
+/* ---------------- footer year & init ---------------- */
+document.getElementById('footerYear').textContent = new Date().getFullYear();
+loadPosts();
+</script>
+</body>
+</html>

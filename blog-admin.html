@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অ্যাডমিন — সোশ্যাল সিকিউর</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171B2E; --paper:#FFFFFF; --paper-dark:#1B1E2E; --bg:#F6F5F1; --bg-dark:#0B0C14;
+    --navy:#1A2140; --gold:#B8863B; --muted:#6B6F80; --line:#E7E5DE;
+    --safe:#2C6B4F; --safe-bg:#E7F2ED; --maroon:#8B2E2E;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:'Hind Siliguri', sans-serif; background:var(--bg); color:var(--ink); padding-bottom:40px; }
+  [data-theme="dark"] body{ background:var(--bg-dark); color:#EDEDF2; }
+  h1,h2{ font-family:'Noto Serif Bengali', serif; margin:0; }
+  .wrap{ max-width:520px; margin:0 auto; padding:18px 16px; }
+  input, textarea{
+    width:100%; padding:10px; border-radius:8px; border:1.5px solid var(--line);
+    font-family:inherit; font-size:14px; margin-bottom:8px; background:var(--paper); color:var(--ink);
+  }
+  [data-theme="dark"] input, [data-theme="dark"] textarea{ background:var(--paper-dark); border-color:#2b2e40; color:#EDEDF2; }
+  textarea{ min-height:90px; resize:vertical; }
+  button{ font-family:inherit; cursor:pointer; }
+  .btn-main{
+    width:100%; padding:11px; border:none; border-radius:9px;
+    background:var(--navy); color:#fff; font-size:14.5px; font-weight:700;
+  }
+  .card{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:14px; margin:14px 0;
+  }
+  [data-theme="dark"] .card{ background:var(--paper-dark); border-color:#2b2e40; }
+  .card-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .card-head .title{ font-weight:700; color:var(--navy); }
+  [data-theme="dark"] .card-head .title{ color:#E8D9BC; }
+  .mini-btn{
+    padding:6px 12px; font-size:12.5px; border:1px solid var(--navy); border-radius:6px;
+    background:none; color:var(--navy);
+  }
+  [data-theme="dark"] .mini-btn{ border-color:#E8D9BC; color:#E8D9BC; }
+  .item{ border-bottom:1px solid var(--line); padding:10px 0; }
+  [data-theme="dark"] .item{ border-color:#2b2e40; }
+  .item:last-child{ border-bottom:none; }
+  #loginBox{
+    max-width:340px; margin:60px auto; background:var(--paper); border:1px solid var(--line);
+    border-radius:14px; padding:26px 22px; text-align:center;
+  }
+  [data-theme="dark"] #loginBox{ background:var(--paper-dark); border-color:#2b2e40; }
+  #loginErr{ display:none; color:var(--maroon); font-size:13px; margin-top:8px; }
+  #panel{ display:none; }
+  #panelHeader{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  #logoutBtn{ background:none; border:1px solid var(--line); border-radius:7px; padding:6px 12px; font-size:12.5px; color:var(--ink); }
+  #msgBox{ display:none; margin-top:10px; padding:9px 11px; border-radius:7px; font-size:13px; }
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+  <h2 style="color:var(--navy); font-size:19px; margin-bottom:14px;">অ্যাডমিন লগইন</h2>
+  <input type="password" id="pwInput" placeholder="পাসওয়ার্ড দিন" autocomplete="off">
+  <button class="btn-main" onclick="login()">লগইন করুন</button>
+  <div id="loginErr">পাসওয়ার্ড ভুল হয়েছে, আবার চেষ্টা করুন।</div>
+</div>
+
+<div id="panel">
+  <div class="wrap">
+    <div id="panelHeader">
+      <h1 style="font-size:18px; color:var(--navy);">সোশ্যাল সিকিউর — অ্যাডমিন</h1>
+      <button id="logoutBtn" onclick="logout()">লগ-আউট</button>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="title">✍️ নতুন পোস্ট লিখুন</div>
+      </div>
+      <input type="text" id="newTitle" placeholder="শিরোনাম">
+      <input type="text" id="newCategory" list="catList" placeholder="ক্যাটাগরি (যেমন: একাউন্ট নিরাপত্তা)">
+      <datalist id="catList"></datalist>
+      <textarea id="newContent" placeholder="বিস্তারিত লিখুন..."></textarea>
+      <label style="display:block; font-size:12.5px; color:var(--muted); margin-bottom:4px;">ছবি (ঐচ্ছিক, সর্বোচ্চ ৫ এমবি)</label>
+      <input type="file" id="newImage" accept="image/*" style="margin-bottom:10px;">
+      <button class="btn-main" id="addBtn" onclick="addPost()">পোস্ট করুন</button>
+      <div id="msgBox"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="title">📄 সব পোস্ট</div>
+        <button class="mini-btn" onclick="loadPosts()">রিফ্রেশ</button>
+      </div>
+      <div id="postsList">লোড হচ্ছে...</div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="title">💬 কমেন্ট</div>
+        <button class="mini-btn" onclick="loadComments()">রিফ্রেশ</button>
+      </div>
+      <div id="commentsList">লোড হচ্ছে...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTc7Kg6lsjmY8nGyqcI5AsZxwNZxliQQ78r6Lr_YrWE0I4GPQQ1JhW0ssT2t9yjy4/exec";
+const SITE_KEY = "blog";
+
+function login(){
+  const pw = document.getElementById('pwInput').value.trim();
+  if(!pw) return;
+  sessionStorage.setItem('ssAdminPw', pw);
+  fetch(SCRIPT_URL + '?action=listPosts&site=' + SITE_KEY + '&password=' + encodeURIComponent(pw))
+    .then(r => r.json())
+    .then(data => {
+      if(data.success){
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+        renderPosts(data.posts || []);
+        loadComments();
+      } else {
+        document.getElementById('loginErr').style.display = 'block';
+      }
+    })
+    .catch(()=>{ document.getElementById('loginErr').style.display = 'block'; });
+}
+
+function logout(){
+  sessionStorage.removeItem('ssAdminPw');
+  document.getElementById('panel').style.display = 'none';
+  document.getElementById('loginBox').style.display = 'block';
+  document.getElementById('pwInput').value = '';
+}
+
+function getPw(){ return sessionStorage.getItem('ssAdminPw') || ''; }
+
+function fileToBase64(file){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=> resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function showMsg(text, ok){
+  const box = document.getElementById('msgBox');
+  box.style.display = 'block';
+  box.style.background = ok ? 'var(--safe-bg)' : '#F5E1E1';
+  box.style.color = ok ? 'var(--safe)' : 'var(--maroon)';
+  box.textContent = text;
+}
+
+function addPost(){
+  const title = document.getElementById('newTitle').value.trim();
+  const category = document.getElementById('newCategory').value.trim();
+  const content = document.getElementById('newContent').value.trim();
+  const imgInput = document.getElementById('newImage');
+  const btn = document.getElementById('addBtn');
+
+  if(!title || !content){
+    showMsg('শিরোনাম ও বিস্তারিত দুটোই লিখুন।', false);
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'পোস্ট হচ্ছে...';
+  const payload = { action: 'addPost', password: getPw(), title: title, content: content, site: SITE_KEY, category: category };
+  const imageFile = imgInput.files[0];
+
+  Promise.resolve()
+    .then(()=>{
+      if(imageFile){
+        return fileToBase64(imageFile).then(dataUrl=>{
+          payload.imageBase64 = dataUrl;
+          payload.imageName = imageFile.name;
+          payload.imageType = imageFile.type || 'image/jpeg';
+        });
+      }
+    })
+    .then(()=> fetch(SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload)
+    }))
+    .then(r => r.json())
+    .then(data => {
+      if(data.success){
+        showMsg('✓ পোস্ট হয়ে গেছে!', true);
+        document.getElementById('newTitle').value = '';
+        document.getElementById('newCategory').value = '';
+        document.getElementById('newContent').value = '';
+        imgInput.value = '';
+        loadPosts();
+      } else {
+        showMsg('সমস্যা হয়েছে: ' + (data.error || 'অজানা এরর'), false);
+      }
+    })
+    .catch(()=> showMsg('সংযোগে সমস্যা হয়েছে।', false))
+    .finally(()=>{ btn.disabled = false; btn.textContent = 'পোস্ট করুন'; });
+}
+
+function loadPosts(){
+  const listEl = document.getElementById('postsList');
+  listEl.textContent = 'লোড হচ্ছে...';
+  fetch(SCRIPT_URL + '?action=listPosts&site=' + SITE_KEY + '&password=' + encodeURIComponent(getPw()))
+    .then(r => r.json())
+    .then(data => {
+      if(!data.success){ listEl.textContent = 'পোস্ট লোড করতে সমস্যা হয়েছে।'; return; }
+      renderPosts(data.posts || []);
+    })
+    .catch(()=>{ listEl.textContent = 'সংযোগে সমস্যা হয়েছে।'; });
+}
+
+function renderPosts(posts){
+  const listEl = document.getElementById('postsList');
+  const catList = document.getElementById('catList');
+
+  const cats = [...new Set(posts.map(p => p.category).filter(Boolean))];
+  catList.innerHTML = cats.map(c => '<option value="' + String(c).replace(/"/g,'&quot;') + '">').join('');
+
+  if(posts.length === 0){ listEl.textContent = 'এখনো কোনো পোস্ট নেই।'; return; }
+  listEl.innerHTML = posts.map(p => {
+    const safeTitle = String(p.title || '').replace(/</g,'&lt;');
+    const safeCat = String(p.category || 'সাধারণ').replace(/</g,'&lt;');
+    const safeId = String(p.id || '').replace(/</g,'&lt;');
+    return '<div class="item">' +
+      '<div style="font-size:11.5px; color:var(--gold); font-weight:700;">' + safeCat + '</div>' +
+      '<div style="font-size:12px; color:var(--muted);">' + (p.date || '') + ' • ❤️ ' + (p.likes||0) + ' • 💬 ' + (p.commentCount||0) + '</div>' +
+      '<div style="font-size:14.5px; font-weight:700; margin:4px 0;">' + safeTitle + '</div>' +
+      '<div style="display:flex; gap:8px; margin-top:6px;">' +
+        '<button class="mini-btn" onclick="copyLink(\'' + safeId + '\')">লিংক কপি</button>' +
+        '<button class="mini-btn" style="border-color:var(--maroon); color:var(--maroon);" onclick="deletePost(' + p.rowIndex + ')">মুছুন</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function copyLink(id){
+  const base = window.location.href.replace(/admin\.html.*$/, 'index.html');
+  const link = base + '?post=' + encodeURIComponent(id);
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(link).then(()=> alert('লিংক কপি হয়েছে!'));
+  } else {
+    alert(link);
+  }
+}
+
+function deletePost(rowIndex){
+  if(!confirm('পোস্টটি মুছে ফেলতে চান?')) return;
+  fetch(SCRIPT_URL + '?action=deletePost&site=' + SITE_KEY + '&password=' + encodeURIComponent(getPw()) + '&row=' + rowIndex)
+    .then(r => r.json())
+    .then(()=> loadPosts())
+    .catch(()=> alert('মুছতে সমস্যা হয়েছে।'));
+}
+
+function loadComments(){
+  const listEl = document.getElementById('commentsList');
+  listEl.textContent = 'লোড হচ্ছে...';
+  fetch(SCRIPT_URL + '?action=listComments&site=' + SITE_KEY + '&password=' + encodeURIComponent(getPw()))
+    .then(r => r.json())
+    .then(data => {
+      if(!data.success){ listEl.textContent = 'কমেন্ট লোড করতে সমস্যা হয়েছে।'; return; }
+      if(!data.comments || data.comments.length === 0){ listEl.textContent = 'কোনো কমেন্ট নেই।'; return; }
+      listEl.innerHTML = data.comments.map(c => {
+        const safeName = String(c.name).replace(/</g,'&lt;');
+        const safeText = String(c.text).replace(/</g,'&lt;');
+        return '<div class="item">' +
+          '<div style="font-size:13.5px;">' + safeText + '</div>' +
+          '<div style="font-size:12px; color:var(--muted); margin:4px 0 8px;">— ' + safeName + ' • ' + c.date + '</div>' +
+          '<button class="mini-btn" style="border-color:var(--maroon); color:var(--maroon);" onclick="commentDelete(' + c.rowIndex + ')">মুছুন</button>' +
+        '</div>';
+      }).join('');
+    })
+    .catch(()=>{ listEl.textContent = 'সংযোগে সমস্যা হয়েছে।'; });
+}
+
+function commentDelete(row){
+  fetch(SCRIPT_URL + '?action=commentAction&password=' + encodeURIComponent(getPw()) + '&row=' + row + '&status=delete')
+    .then(r => r.json())
+    .then(()=> loadComments());
+}
+
+// পেজ লোড হলে সেশনে পাসওয়ার্ড থাকলে সরাসরি প্যানেলে ঢুকিয়ে দেয়
+(function(){
+  const pw = getPw();
+  if(pw){
+    document.getElementById('pwInput').value = pw;
+    login();
+  }
+})();
+</script>
+</body>
+</html>
